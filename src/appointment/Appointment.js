@@ -27,7 +27,7 @@ export default class Appointment extends Component {
     let token = localStorage.getItem("jwtToken");
     if (token) {
         let decoded = jwtDecode(token);
-        console.log(decoded);
+        console.log(decoded);//checking to see what comes here..
       this.props.history.push("/make-appointment");
     } else {
       this.props.history.push("/");
@@ -45,14 +45,22 @@ export default class Appointment extends Component {
   handleOnSubmit = async (event) => {
     event.preventDefault();
     const { appointmentTime } = this.state;
-    // console.clear();
-
-    // console.log(this.state);
+    
+    //get email or id from local storage
+    let token = localStorage.getItem("jwtToken");
+    
+        let decoded = jwtDecode(token);
+console.log(decoded)
+    
     try {
       const sendBack = await axios.post(
         "http://localhost:4000/todo/make-appointment",
         {
           appointmentTime: appointmentTime,
+          //have to send email or id
+          email:decoded.email,
+
+
         }
       );
 
